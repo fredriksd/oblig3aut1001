@@ -1,0 +1,8 @@
+\select@language {norsk}
+\contentsline {section}{Introduksjon}{2}
+\contentsline {section}{Hensikt}{2}
+\contentsline {section}{Teori}{2}
+\contentsline {section}{L\IeC {\o }sning}{2}
+\contentsline {subsection}{Implementasjon}{2}
+\contentsline {section}{Diskusjon}{2}
+\contentsline {section}{Konklusjon}{2}
