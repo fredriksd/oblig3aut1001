@@ -60,14 +60,31 @@ I samsvar med arbeidskravene til faget "Programmering med mikrokontrollere", tre
 Protokollen som skulle brukes i oppgaven er "halv-dupleks" - En datapakke sendes først fra datamaskinen til mikrokontrolleren ved hjelp RS-232 - kommunikasjon. Deretter forventer protokollen en transmit fra mikrokontrolleren. Dataen som sendes og mottas er forventet å være i ASCII-format. Hver Rx - prosedyre er kontrollert ved hjelp av rekkefølgen på pakkeelementene: Hver pakke begynner på en bokstav, enten $A$, $B$, $C$ eller $D$ etterfulgt med line feed, $\backslash n$. Når en Rx-prosedyre er gjennomført, avsluttes pakken med $R$ og $\backslash n$, og protokollen er klar for å motta en Tx-prosedyre, som ikke er like strengt lagt opp. Den forventer igjen det samme som i Rx, men rekkefølgen spiller ingen rolle, og ingen $R$ trengs ikke for å konkludere transmit. 
 
 \subsection{USART og SPI}
-For å opprette kommunikasjon mellom PC og displaykortet er USART - Universal Synchronous Asynchronous Receive Transmit - et nyttig verktøy. Det er en type seriell kommuikasjon, der dataelementene/bitsene shiftes over en kabel mellom enhetene. Ved hjelp av en ekstra kabel kan en bruke en seriell klokke mellom enhetene for å synkronisere dataregistreringen hos mottakeren. I vårt tilfelle benyttes ikke den serielle klokken. Kommunikasjonen blir dermed asynkron - UART. Asynkron USART bruker et start-bit og et (evt. to) stopp-bit i tillegg til den dataen som sendes for å bestemme overføringshastigheten. UART-kommunikasjonen åpner for bruk av 'peripherene' på displaykortet. Kommunikasjonen mellom atMega644A og de ulike komponentene kalles SPI. %Skriv mer om dette
+For å opprette kommunikasjon mellom PC og displaykortet er USART - Universal Synchronous Asynchronous Receive Transmit - et nyttig verktøy. Det er en type seriell kommuikasjon, der dataelementene/bitsene shiftes over en kabel mellom enhetene. Ved hjelp av en ekstra kabel kan en bruke en seriell klokke mellom enhetene for å synkronisere dataregistreringen hos mottakeren. I vårt tilfelle benyttes ikke den serielle klokken. Kommunikasjonen blir dermed asynkron - UART. Asynkron USART bruker et start-bit og et (evt. to) stopp-bit i tillegg til den dataen som sendes for å bestemme overføringshastigheten. UART-kommunikasjonen åpner for bruk av 'peripherene' på displaykortet. Kommunikasjonen mellom ATmega644A og de ulike komponentene kalles SPI. Serial Peripheral Interface er seriell kommunikasjon over "korte avstander", og benyttes for å kommunisere mellom flere enheter og mikrokontrolleren. ATmega644 fungerer som master, og periferene fungerer som slaver. Dataoverføring ved SPI fungerer som en loop: Data blir sendt fra master til slave via MOSI samtidig som data mottas fra slave til master via MISO. På denne måten kan slaven og master veksle informasjon på en enkelt kommunikasjonslinje. SPI-kommunikasjon ble brukt mellom følgende enheter:
+
+\begin{itemize}
+\item LCD - display: Liquid Crystal Display - display
+\item LED - lys
+\item Potensialmeter
+\item Piezo-buzzer
+\item ISP-connector 
+\end{itemize}
+
+\subsection{Interrupts og Timer2}
+Flere av de periferene som ble brukt ble brukt i sammenheng med en interrupt. En interrupt, eller ISR - Interrupt Service Routine - 'forstyrrer' arbeidsflyten til prosessoren for å gjennomføre et sett med oppgaver implementert av programmereren til denne ISR-rutinen. Da settes alt annet på mikrokontrolleren på vent, og hovedprogrammet fortsettes etter at det nødvendige flagget fra interruptets opphavsregister registreres høyt. I dette tilfellet bruktes interrupts for UART-kommunikasjon, Timer2 - output-compare-mode - non-pwm-mode, samt ADC. 
+
 
 \section{Løsning}
+
+
 \subsection{Implementasjon}
+Til vår løsning av problemstillingen benyttet vi oss av interrupts til å behandle informasjon mottatt fra PCen og til å sende informasjon. Tanken for vår løsning var å holde mikrokontrolleren og PCen i en konstant kommunikasjonsloop i samsvar med protokollen: Data blir mottatt, og data blir sendt. Når noe ble mottatt, gikk RXC - flagget høyt $UCSR0A$ (USART Control And Status Register A), og RXC-ISR-rutinen mottok informasjonen shiftet fra PC og mottatt i UDR-registeret i ASCII-format. Datainnholdet ble lagret i et globalt array som ble sjekket for kjennetegnene for endring av pakkeinformasjon, i dette tilfellet en bokstav fra 'A' til 'D' eller 'R' og line-feed. Informasjonen ble lagret i ulike arrays ($A\_array$,$B\_array$,$C\_array$,$D\_array$) for videre behandling. Da det siste pakkeelementet 'R' og linefeed var mottatt, ble tilstandsvariabelen $receive_done$ satt høyt.
+
+Da de ulike dataene hadde ulike hensikter, var det passende å systematisere informasjonen i en felles behandlingsfunksjon, $received()$ (linje 115 - 178) som hadde det nullte elementet i hver pakke som argument. Funksjonen baserte seg på en switch-case som enten printet en linje på LCD-displayet, regulerte LED-lysene eller aktiverte TIMER2-ISR for bruk av OCR. For tilfellene 'A' og 'B', var det simpelthen kalling av funksjonen $lcd\_printline()$ fra $serlcd.h$ - biblioteket. LED-lysene ble regulert ved å tukle litt med AND-operatoren mellom GPIO-pinnene og $C\_array$. 'D'-tilfellet ble litt mer arbeid, da det krevdes å gjøre elementene i $D\_array$ om til desimal - 1 enn ASCII-1. Hvert element ble trukket fra med '0' og multiplisert med enten 1000, 100 eller 10, basert på deres posisjon i arrayet. 
 
 \section{Diskusjon}
 
 \section{Konklusjon}
-%\lstinputlisting{main.c}
+\lstinputlisting{main.c}
 
 \end{document}

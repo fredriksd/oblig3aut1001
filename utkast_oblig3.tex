@@ -1,0 +1,206 @@
+\documentclass[12pt, a4paper]{report}
+
+\usepackage[T1]{fontenc} 								
+\usepackage[norsk]{babel}								
+\usepackage[utf8]{inputenc}						
+\usepackage{graphicx}       						
+\usepackage{amsmath,amssymb}
+\usepackage{grffile}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage[export]{adjustbox}
+\usepackage{titling}
+\setcounter{secnumdepth}{0}
+
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+\lstset{extendedchars=true, basicstyle=\footnotesize, numbers=left, numberstyle=\tiny, frame=shadowbox, tabsize=2, language=C, showstringspaces=false, breaklines=true,
+  literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {ã}{{\~a}}1 {Ã}{{\~A}}1 {õ}{{\~o}}1 {Õ}{{\~O}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\EUR}}1 {£}{{\pounds}}1}
+
+\setlength{\textheight}{240mm} 
+\setlength{\textwidth}{180mm}  
+\topmargin -5mm 
+\oddsidemargin -5mm
+\captionsetup[figure]{singlelinecheck=off, justification = raggedleft} 
+\pretitle{%
+  \begin{center}
+  \LARGE
+  \includegraphics[width=6cm,height=6cm]{uitlogo.png}\\[\bigskipamount]
+}
+\posttitle{\end{center}}
+
+\begin{document}
+
+\title{Oblig 3 - Halvdupleksprotokoll}
+\author{Fredrik Sandhei, Mathias Haukås \thanks{UiT - AUT-1001, obligatorisk innlevering 3}}
+\date{\today}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduksjon}
+I samsvar med arbeidskravene til faget 'Programmering med mikrokontrollere', trengs det tre arbeidskrav, i form av tre obligatoriske innleveringer, godkjent. I dette dokumentet ligger vår besvarelse på den siste obligatoriske innleveringen - oblig 3. 
+
+\section{Hensikt}
+
+Formålet med denne oppgaven er å bruke det meste vi har lært i AUT-1001 i en og samme oppgave. Dette gjør at man må ha en forståelse av hvordan en mikrokontroller fungerer, og at man klarer å programmere den på en slik måte at man kan «snakke» med de forskjellige komponentene i den.
+
+
+På bakgrunn av alle tidligere øvinger og tidligere innleveringer har vi lært de forskjellige aspektene av denne oppgaven. Det som skiller denne oppgaven fra de er at denne oppgaven krever at vi setter sammen de tidligere innleveringene og øvingsoppgavene. Vi bruker dermed ikke bare en del av kontrolleren i gangen, slik so vi tidlighere har gjort.  Idenne oppgaven bruker vi både timer, ADC, USART, SPI, lys, leser av verdier av knapper og skriver tekst og verdier inn på en lcd (-display).
+
+
+\section{Teori}
+I denne oppgaven skulle man bruke en programvare utgitt, Oblig3.exe, til å kommunisere med mikrokontrolleren. Det som skulle skrives fra datamaskinen er tekst, nåværende dag og tidspunkt. Man skulle også styre LED-lys og stille inn en frekvens på en høyttaler.
+Fra mikrokontrolleren skal det sendes hvilken verdi ADC-en måler og konvertere denne til en spenning mellom 0V og 5V, en fritt valgt tekst, hvilken stilling knappene er satt til og hvilken HEX-verdi velgeren på displaykortet har.
+
+
+\subsection{Protokoll}
+Protokollen som skulle brukes i oppgaven er halv-dupleks: En datapakke sendes først fra datamaskinen til mikrokontrolleren ved hjelp av RS-232 - kommunikasjon. Deretter forventer protokollen en transmit fra mikrokontrolleren. Dataen som sendes og mottas er forventet å være i ASCII-format. Hver Rx - prosedyre er kontrollert ved hjelp av rekkefølgen på pakkeelementene: Hver pakke begynner på en bokstav, enten $A$, $B$, $C$ eller $D$ etterfulgt med line feed, $\backslash n$. Når en Rx-prosedyre er gjennomført, avsluttes pakken med $R$ og $\backslash n$, og protokollen er klar for å motta en Tx-prosedyre, som ikke er like strengt lagt opp. Den forventer igjen det samme som i Rx, men rekkefølgen spiller ingen rolle, og ingen $R$ trengs ikke for å konkludere transmit. 
+
+\subsection{USART og SPI}
+For å opprette kommunikasjon mellom PC og displaykortet er USART - Universal Synchronous Asynchronous Receive Transmit - et nyttig verktøy. Det er en type seriell kommuikasjon, der dataelementene/bitsene shiftes over en kabel mellom enhetene. Ved hjelp av en ekstra kabel kan en bruke en seriell klokke mellom enhetene for å synkronisere dataregistreringen hos mottakeren. I vårt tilfelle benyttes ikke den serielle klokken. Kommunikasjonen blir dermed asynkron - UART. Asynkron USART bruker et start-bit og et (evt. to) stopp-bit i tillegg til den dataen som sendes for å bestemme overføringshastigheten. UART-kommunikasjonen åpner for bruk av 'peripherene' på displaykortet. Kommunikasjonen mellom ATmega644A og de ulike komponentene kalles SPI. Serial Peripheral Interface er seriell kommunikasjon over 'korte avstander', og benyttes for å kommunisere mellom flere enheter og mikrokontrolleren. ATmega644 fungerer som master, og periferene fungerer som slaver. Dataoverføring ved SPI fungerer som en loop: Data blir sendt fra master til slave via MOSI samtidig som data mottas fra slave til master via MISO. På denne måten kan slaven og master veksle informasjon på en enkelt kommunikasjonslinje. SPI-kommunikasjon ble brukt mellom følgende enheter:
+
+\begin{itemize}
+\item LCD - display: Liquid Crystal Display - display
+\item LED - lys
+\item Potensialmeter
+\item Piezo-buzzer
+\item ISP-connector 
+\end{itemize}
+
+\subsection{Interrupts og Timer2}
+Flere av de periferene som ble brukt ble brukt i sammenheng med en interrupt. En interrupt, eller ISR - Interrupt Service Routine - 'forstyrrer' arbeidsflyten til prosessoren for å gjennomføre et sett med oppgaver implementert av programmereren til denne ISR-rutinen. Da settes alt annet på mikrokontrolleren på vent, og hovedprogrammet fortsettes etter at det nødvendige flagget fra interruptets opphavsregister registreres høyt. I dette tilfellet bruktes interrupts for UART-kommunikasjon, Timer2 - output-compare-mode - non-pwm-mode, samt ADC. 
+
+%%% SKRIV OM ADC 
+\subsection{ADC - Analog to Digital Converter}
+Når vi skal måle spenning på uK må man først åpne databladet til uK for å finne ut hvilke(n) av pinnen(e) som har mulighet til å fungere som ADC. Det er først etter dette at man kan begynne å programere en ADC. I vårt tilfelle er ADC0 den som er lettest å bruke, så da er det den som blir tatt i bruk.
+
+Når man skal ta i bruk ADC0, må man føst vite om det er 8- eller 10-bits konverter, dette finner man i databladet. når man har funnet ut av dette vet man hvor mange diskrete nivåer det er. Man må også finne ut hvor stort område det er man gjør målinger på, ettersom man kun har ett bestemt antall forskjellige nivåer vil spenningsvidden vi skal måle på ha stor innvirkning på hvor stor presisjon vi kan oppnå. Ettersom verdien ut fra ADC vil være:
+
+\begin{equation}
+Output = Bitstørrelse \cdot \frac{Input(V)}{Spenningsvidde(V)}
+\end{equation}
+På ATmega644A er ADC0 en 10-bits konverter, og spenningsvidden er på 5V dette gir likningen:
+
+\begin{equation}
+Output = 1023 \cdot \frac{Input(V)}{5V}
+\end{equation}
+
+
+\section{Løsning}
+
+\subsection{Implementasjon}
+Til vår løsning av problemstillingen benyttet vi oss av interrupts til å behandle informasjon mottatt fra PCen og til å sende informasjon. Tanken for vår løsning var å holde mikrokontrolleren og PCen i en konstant kommunikasjonsloop i samsvar med protokollen: Data blir mottatt, og data blir sendt. Når noe ble mottatt, gikk RXC - flagget i $UCSR0A$ (USART Control And Status Register A) høyt, og RXC-ISR-rutinen mottok informasjonen shiftet fra PC og mottatt i UDR-registeret i ASCII-format. Datainnholdet ble lagret i et globalt array som ble sjekket for kjennetegnene for endring av pakkeinformasjon, i dette tilfellet en bokstav fra 'A' til 'D' eller 'R' og line-feed. Informasjonen ble lagret i ulike arrays ($A\_array$,$B\_array$,$C\_array$,$D\_array$) for videre behandling. Da det siste pakkeelementet 'R' og linefeed var mottatt, ble tilstandsvariabelen $receive\_done$ satt høyt.
+
+Da de ulike dataene hadde ulike hensikter, var det passende å systematisere informasjonen i en felles behandlingsfunksjon, $received()$ (linje 112 - 175) som hadde det nullte elementet i hver pakke som argument. Funksjonen baserte seg på en switch-case som enten printet en linje på LCD-displayet, regulerte LED-lysene eller aktiverte TIMER2-ISR for bruk av OCR. For tilfellene 'A' og 'B', var det simpelthen kalling av funksjonen $lcd\_printline()$ fra $serlcd.h$ - biblioteket. LED-lysene ble regulert ved å tukle litt med AND-operatoren mellom GPIO-pinnene og $C\_array$. 'D'-tilfellet ble litt mer arbeid, da det krevdes å gjøre elementene i $D\_array$ om til desimal - 1 enn ASCII-1. Hvert element ble trukket fra med '0' og multiplisert med enten 1000, 100 eller 10, basert på deres posisjon i arrayet.\\
+Add-verdien, det vil si verdien som trengs for å skape en Output Compare - ISR, er antall klokkesteg prosessorklokken må gå. Da mikrokontrollerens frekvens er $F\_CPU = 14.7456Mhz$ passer det med bruk av en 64-bits prescaler for å sette antall klokkeverdier ned. Da blir antall klokkesteg per millisekund:
+
+\begin{equation}
+F_{CPU\slash{64}} \approx 0.2304Mhz \approx 230Khz = 230 \frac{klokketikk}{ms}
+\end{equation}
+
+Da høytaleren skulle produsere kvadratbølger med frekvens mellom 1000Hz og 3000 Hz, blir antall klokkesteg slik:
+
+\begin{equation}
+add_{f = 1000Hz} = \qquad \frac{\frac{T_{f}}{2}}{T_{CPU\slash{64}}} = \frac{\frac{1}{2000s}}{4.35\cdot 10^{-6}} \approx 115 \frac{klokketikk}{ms}
+\end{equation}
+
+\begin{equation}
+add_{f = 3000Hz} = \qquad \frac{\frac{T_{f}}{2}}{T_{CPU\slash{64}}} = \frac{\frac{1}{6000s}}{4.35\cdot 10^{-6}} \approx 38 \frac{klokketikk}{ms}
+\end{equation}
+
+For å implementere dette inn i C, ble det gjort på en litt annerledes metode. Noen av verdiene ble regnet ut for hånd, slik at en kunne minske sjansen for reduksjon av resolution/oppløsning (antall verdier mellom 0 og maks-verdi). \\
+
+\begin{lstlisting}
+volatile unsigned char add;
+add = (long)115200/freq;
+\end{lstlisting}
+
+
+\subsubsection{uart\_send()}
+Etter behandling av mottatt informasjon via $received()$ kaltes funksjonen $uart\_send()$ (linje 181 - 283). For å sende data på den enkleste måten, ble de ulike pakkedataene først lagt i egne arrays, lignende som i mottakerfunksjonen. Til slutt ble arrayene slått sammen til et stort array, $send\_array$. Tankegangen på sammenslåingen er enkel: Da hver array avsluttes med linefeed, kunne man ved hjelp av en for-loop med to separate tellere $i$ og $sep\_cntr$ og if-tester sjekke etter linefeeds i sendepakkene. Hvis en linefeed ble oppdaget, var det indikasjon på 'end of transmission' på pakken, og den neste pakken kunne leses. Da alle pakkene var klar for sending, ble det nullte elementet i $send\_array$ shiftet inn i UDR-registeret for å sette i gang en Tx-interrupt.
+
+\subsubsection{ADC0 - problemet}
+Når ADC0 merker en endring aktiveres ett interrupt som direkte lagrer verdien i en variabel som blir manipulert slik at det blir gjort om til mV, dette fordi det er tegnene vi ønsker å vise på dataen. Dette gjøres inni interruptet slik at variabelen som kommer ut er nesten klar for sending.
+
+En ting man kan legge merke til er at addressebryteren er koblet på en litt merkelig måte. Vi måtte dermed finne en måte å speile signalet som kom fra den. Signalene var nemlig slik:\\
+
+\begin{center}
+    \begin{tabular}{| l | l | l |}
+    \hline
+    Verdi på bryter & Output & Egentlig binær verdi\\ \hline
+    1 & 1000 & 0001 \\ \hline
+    2 & 0100 & 0010 \\ \hline
+    4 & 0010 & 0100 \\ \hline
+    8 & 0001 & 1000 \\ \hline
+    A & 0101 & 1010 \\ \hline
+    \end{tabular}
+\end{center}
+
+Vår løsning på dette ble å kjøre if-tester slik at vi isolerte hver enkelt pinne. Dermed kunne vi addere sammen verdiene på enkeltpinnene slik at den inputverdien vi fikk ble samme som binærverdi. For å gjøre vedien om til ASCII vedier slo vi opp en tabell som sa at 0 i ASCII var 48 (HEX 30). Derfor satte vi startverdi på variabelen til å være 48, og om verdien ble større eller lik 57 la vi til 7. På denne måten kom vi forbi tegnene som er mellom 9 og A i ASCII, og vi fikk ut et resultat vi kunne sende til programmet på dataen.\\ Se fra linje 220 til 236 i vedlegg main.c (vedlegg).
+
+
+\section{Diskusjon}
+
+Mens vi jobbet med overføring mellom pc og uK møtte vi på et problem med informasjonsflyten. Dette var et problem som førte til at vi ikke klarte å overføre noe data. Etter at både hjelpelærer og faglærer hadde sett på koden, hvor ingen klarte å se ett spesifikt problem med koden tok faglærer å hentet ett oscilloskop hvor vi da kunne se dataflow. Det viste seg da at problemet var knyttet til sendetidspunkt fra uK til pc. Dette så vi vet at det var uregelmessige sendinger fra uK til pc samtidig som pc sendte data til uK, da vi så dette forsto vi hva som var feil med koden å endret den fra å gjøre operasjonen i en switch-case til en if-test. Dette gjorde at vi kunne kontrollere at vi hadde fått hele pakken fra pc-en før vi sendte data fra uK til pc. Dataen mottatt ble aldri sjekket for hvilket element som ble mottatt, bare etter linefeed, noe som gjorde vanskelig for protokollen å bestemme hva slags pakke den hadde mottatt.\\
+Etter hvert som vi kodet og vi ikke fikk de dataene som vi ønsket frem på dataen tok vi i bruk LCD til feilsøking. Dette ble gjort ved å skrive ut dataene på linjene og så dermed hva som kom ut, og ettersom vi visste hvilke tall eller tegn vi ønsket å se, kunne vi jobbe ut fra det og klarte dermed å finne ut hva som skulle til for å få det til. I motsetning til når vi så hva som kom på datamaskinen, hvor det, pga. feil med sendingen til PC, ikke kom noe som helst.
+
+
+\section{Konklusjon}
+
+Koden implementert for denne problemstillinga var basert på å følge den halvduplekse protokollen som var utgitt. Ved bruk av interrupts ble det dannet en mottaks-og sendestruktur på den serielle kommunikasjonslinjen mellom uK og PC. Denne implementasjonen funket godt til dette formålet, selv om bruken av all interrupts kan gjøre at koden 'stopper opp', dvs ikke kommer seg av videre pga gjentakende interrupts. Men da denne protokollen bare drev med sending og mottaking av spesifikk informasjon, ble dette ikke noe stort faremoment å ta til vurdering.
+
+\newpage
+
+\section{Vedlegg - kildekode}
+\lstinputlisting[language=C]{main.c}
+
+\end{document}

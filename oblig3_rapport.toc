@@ -3,7 +3,9 @@
 \contentsline {section}{Hensikt}{2}
 \contentsline {section}{Teori}{2}
 \contentsline {subsection}{Protokoll}{2}
-\contentsline {section}{L\IeC {\o }sning}{2}
-\contentsline {subsection}{Implementasjon}{2}
-\contentsline {section}{Diskusjon}{2}
-\contentsline {section}{Konklusjon}{2}
+\contentsline {subsection}{USART og SPI}{2}
+\contentsline {subsection}{Interrupts og Timer2}{2}
+\contentsline {section}{L\IeC {\o }sning}{3}
+\contentsline {subsection}{Implementasjon}{3}
+\contentsline {section}{Diskusjon}{3}
+\contentsline {section}{Konklusjon}{3}

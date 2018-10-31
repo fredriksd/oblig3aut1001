@@ -1,0 +1,15 @@
+\select@language {norsk}
+\contentsline {section}{Introduksjon}{2}
+\contentsline {section}{Hensikt}{2}
+\contentsline {section}{Teori}{2}
+\contentsline {subsection}{Protokoll}{2}
+\contentsline {subsection}{USART og SPI}{2}
+\contentsline {subsection}{Interrupts og Timer2}{3}
+\contentsline {subsection}{ADC - Analog to Digital Converter}{3}
+\contentsline {section}{L\IeC {\o }sning}{4}
+\contentsline {subsection}{Implementasjon}{4}
+\contentsline {subsubsection}{uart\_send()}{5}
+\contentsline {subsubsection}{ADC0 - problemet}{5}
+\contentsline {section}{Diskusjon}{5}
+\contentsline {section}{Konklusjon}{6}
+\contentsline {section}{Vedlegg - kildekode}{7}
